@@ -1,0 +1,7 @@
+<p><%= @hitcount %></p>
+<p><%= @tv_term %></p>
+<% @results.each do |result| %>
+	<p><%= link_to result[:title], result[:url] %></p>
+	<p><%= result[:doc_id] %>
+	<p><%= result[:extract] %>
+<% end %>
