@@ -1,7 +1,7 @@
-<p><%= @hitcount %></p>
-<p><%= @tv_term %></p>
-<% @results.each do |result| %>
-	<p><%= link_to result[:title], result[:url] %></p>
-	<p><%= result[:doc_id] %>
-	<p><%= result[:extract] %>
+<% @index.search_each(params[:query]) do |doc_id, score| %>
+	<p><%= "The doc: #{doc_id}" %></p>
+	<p><%= "The score: #{score}" %></p>
+	<p><%= link_to @index[doc_id][:title], @index[doc_id][:url] %></p>
+<!-- 	<p><%= @index[doc_id][:content] %></p>
+	<p><%= @index[doc_id][:readable].html_safe %></p> -->
 <% end %>
