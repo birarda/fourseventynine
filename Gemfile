@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.9'
+gem 'rake'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -38,7 +39,14 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug'
 gem 'anemone'
-gem 'readability'
 gem 'ruby-readability', :require => 'readability'
 gem 'ferret'
 gem 'k_means'
+
+gem 'therubyracer', '~> 0.11.0beta5'
+group :libv8 do
+  gem 'libv8', "~> 3.11.8"
+end
+
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'

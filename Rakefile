@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-SearchEngine::Application.load_tasks
+Ibergler::Application.load_tasks

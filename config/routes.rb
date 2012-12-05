@@ -1,5 +1,10 @@
-SearchEngine::Application.routes.draw do
-  get "search/new"
+Ibergler::Application.routes.draw do
+  get "search/results"
+  resources :search
+  resources :indexer
+
+
+  root :to => "search#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,11 @@
+<%= link_to(raw("<h1>iBergler</h1>"), root_path, {:class => 'brand-name'}) %>
+<div class="well">
+    <%= form_tag "/search/results", :method => "get", :class => 'form-search' do %>
+        <div class="input-append">  
+            <%= text_field_tag 'query', nil, 
+              :class => 'span6 search-query', 
+              :placeholder => 'Enter your search here...' %>
+            <%= button_tag 'Berglerize', :class => 'btn', :type => 'submit' %>
+        </div>
+    <% end %>
+</div>

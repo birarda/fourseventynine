@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SearchEngine</title>
+  <title><%= content_for?(:title) ? content_for(:title) : "iBergler" %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="container">
 
 <%= yield %>
 
+</div>
+<hr>
+<p class="footer-text muted"><small>COMP 479 P3 - Mikhail Chliakhovski, Alex Ciornei, Stephen Birarda</br>December 6th, 2013</small></p>
 </body>
 </html>

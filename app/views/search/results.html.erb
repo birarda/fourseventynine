@@ -1,0 +1,9 @@
+<%- title "iBergler - #{@query}" %>
+<%= render "search_box" %>
+<% if @results.total_hits == 0 %>
+    <p>No results found for that query. Maybe we need to go deeper?</p>
+<% else %>
+    <% @results.hits.each do |hit| %>
+        <p><%= link_to @index[hit.doc][:title], @index[hit.doc][:url] %></p>
+    <% end %>
+<% end %>
