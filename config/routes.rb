@@ -1,5 +1,6 @@
 SearchEngine::Application.routes.draw do
-  get "search/new"
+  resources :search
+  resources :indexer
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
