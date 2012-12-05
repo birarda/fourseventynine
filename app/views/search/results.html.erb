@@ -1,4 +1,8 @@
 <%= render "search_box" %>
-<% @index.search_each params[:query], {:offset => @offset} do |doc_id, score| %>
-    <p><%= link_to @index[doc_id][:title], @index[doc_id][:url] %></p>
+<% if @results.total_hits == 0 %>
+    <p>No results found for that query. Maybe we need to go deeper?</p>
+<% else %>
+    <% @results.hits.each do |hit| %>
+        <p><%= link_to @index[hit.doc][:title], @index[hit.doc][:url] %></p>
+    <% end %>
 <% end %>
