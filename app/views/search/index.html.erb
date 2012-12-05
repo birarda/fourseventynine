@@ -1,7 +1,6 @@
-<% @index.search_each(params[:query]) do |doc_id, score| %>
-	<p><%= "The doc: #{doc_id}" %></p>
-	<p><%= "The score: #{score}" %></p>
-	<p><%= link_to @index[doc_id][:title], @index[doc_id][:url] %></p>
-<!-- 	<p><%= @index[doc_id][:content] %></p>
-	<p><%= @index[doc_id][:readable].html_safe %></p> -->
+<h1>Search Engine</h1>
+<%= form_tag("/search/new", :method => "get") do %>
+  <%= label_tag(:q, "Search for:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Search") %>
 <% end %>
