@@ -1,6 +1,14 @@
-<h1>Search Engine</h1>
-<%= form_tag("/search/new", :method => "get") do %>
-  <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
-<% end %>
+<div class="span8 offset4">
+    <h1 class="brand-name">iBergler</h1>
+    <div class="well">
+        <%= form_tag "/search/new", :method => "post", :class => 'form-search' do %>
+            <div class="input-append">  
+                <%= text_field_tag 'query', nil, 
+                  :class => 'span6 search-query', 
+                  :placeholder => 'Enter your search here...' %>
+                <%= button_tag 'Berglerize', :class => 'btn', :type => 'submit' %>
+            </div>
+        <% end %>
+    </div>
+    <p class="footer-text muted"><small>COMP 479 P3 - Mikhail Chliakhovski, Alex Ciornei, Stephen Birarda</br>December 6th, 2013</small></p>
+</div>

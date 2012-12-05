@@ -11,3 +11,16 @@
  *= require_self
  *= require_tree .
  */
+
+.form-search {
+    margin: 0;
+    text-align: center;
+}
+
+.footer-text {
+    text-align: center;
+}
+
+.brand-name {
+    text-align: center;
+}

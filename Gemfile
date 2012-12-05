@@ -40,3 +40,11 @@ gem 'jquery-rails'
 gem 'anemone'
 gem 'ruby-readability', :require => 'readability'
 gem 'ferret'
+
+gem 'therubyracer', '~> 0.11.0beta5'
+group :libv8 do
+  gem 'libv8', "~> 3.11.8"
+end
+
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
