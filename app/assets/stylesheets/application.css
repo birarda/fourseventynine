@@ -24,3 +24,8 @@
 .brand-name {
     text-align: center;
 }
+
+.brand-name:hover {
+    color: purple;
+    text-decoration: none;
+}
