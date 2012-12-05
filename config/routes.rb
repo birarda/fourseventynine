@@ -1,6 +1,9 @@
 SearchEngine::Application.routes.draw do
   resources :search
   resources :indexer
+  post "search/new"
+
+  root :to => "search#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -27,7 +27,7 @@ class IndexerController < ApplicationController
     pages_indexed = 0
 
     # crawl this page  
-    Anemone.crawl('http://www.concordia.ca', :depth_limit => 5) do | anemone |
+    Anemone.crawl('http://www.concordia.ca', :depth_limit => 1) do | anemone |
       # only process pages in the article directory 
       anemone.on_every_page do |page|
         next if page.doc.nil?

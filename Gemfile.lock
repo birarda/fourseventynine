@@ -136,6 +136,7 @@ DEPENDENCIES
   less-rails
   libv8 (~> 3.11.8)
   rails (= 3.2.9)
+  rake
   ruby-readability
   sass-rails (~> 3.2.3)
   sqlite3
