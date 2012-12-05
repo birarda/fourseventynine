@@ -40,6 +40,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    distance_measures (0.0.6)
     envjs (0.3.7)
       johnson (>= 2.0.0.pre3)
     erubis (2.7.0)
@@ -59,6 +60,8 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.7.5)
+    k_means (0.0.7)
+      distance_measures (>= 0.0.0)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -130,6 +133,7 @@ DEPENDENCIES
   ferret
   jquery-rails
   json
+  k_means
   rails (= 3.2.9)
   readability
   ruby-readability
