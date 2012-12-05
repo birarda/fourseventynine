@@ -1,4 +1,4 @@
-SearchEngine::Application.routes.draw do
+Ibergler::Application.routes.draw do
   get "search/results"
   resources :search
   resources :indexer
