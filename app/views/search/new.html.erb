@@ -1,3 +1,0 @@
-<% @index.search_each @query do |doc_id, score| %>
-    <p><%= link_to @index[doc_id][:title], @index[doc_id][:url] %></p>
-<% end %>

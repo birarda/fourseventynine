@@ -1,7 +1,8 @@
 SearchEngine::Application.routes.draw do
+  get "search/results"
   resources :search
   resources :indexer
-  post "search/new"
+
 
   root :to => "search#index"
 
