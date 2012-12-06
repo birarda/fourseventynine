@@ -1,5 +1,3 @@
-require 'readability'
-
 class Ferret::Index::IndexReader
 
   TFIDF_THRESH = 0.0
@@ -52,31 +50,27 @@ class IndexerController < ApplicationController
     pages_indexed = 0
     indexed = {}
 
-    # crawl this page  
-    Anemone.crawl('http://www.concordia.ca') do | anemone |
-      # only process pages in the article directory 
-      anemone.on_every_page do |page|
-        next if page.doc.nil?
-        readable = Readability::Document.new(page.body).content
-        next if page.doc.at('title').nil?
-        # store the page in the index
-        
+    Spidr.site('http://www.concordia.ca') do |spider|
+      spider.every_html_page do |page|
+
         # skip if duplicate entry
         next if indexed[page.url]
         indexed[page.url] = 1
 
-        # remove script tags
-        page.doc.at('body').xpath('//script').remove
-    
+        next if page.at('body').nil?
+
+        page.at('body').search('//script').remove
+        body = page.at('body').text
+
         index << {  
           :url => page.url,  
-          :title => page.doc.at('title').text, 
-          :content => page.doc.at('body').text 
-          # :readable => readable
+          :title => page.title, 
+          :content => body
         }
+        
         pages_indexed += 1
         puts "#{page.url} indexed. Total: #{pages_indexed}"
-      end  
+      end
     end
     
     dictionary = {}
