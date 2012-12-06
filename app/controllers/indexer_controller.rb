@@ -54,13 +54,15 @@ class IndexerController < ApplicationController
       anemone.on_every_page do |page|
         next if page.doc.nil?
         next if page.doc.at('title').nil?
-
-        # skip if duplicate entry
-        next if indexed[page.url]
-        indexed[page.url] = 1
-
+        
         page.doc.at('body').xpath('//script').remove
         body = page.doc.at('body').text
+
+        body_md5 = Digest::MD5.hexdigest(body)
+
+        # skip if duplicate entry
+        next if indexed[body_md5]
+        indexed[body_md5] = 1
 
         index << {  
           :url => page.url,  
