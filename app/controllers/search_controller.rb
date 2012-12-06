@@ -9,7 +9,7 @@ class SearchController < ApplicationController
     @cluster = params.has_key?(:cluster) ? params[:cluster].to_i : nil
     
     if @cluster.nil?
- 	    @index = Ferret::Index::Index.new(:path => 'new_index/index')
+ 	  @index = Ferret::Index::Index.new(:path => 'new_index/index')
     else
       @index = Ferret::Index::Index.new(:path => "clusters/#{@cluster}")
     end
