@@ -3,9 +3,18 @@
 <% if @results.total_hits == 0 %>
     <p>No results found for that query. Maybe we need to go deeper?</p>
 <% else %>
-    <% @results.hits.each do |hit| %>
-        <p><%= link_to @index[hit.doc][:title], @index[hit.doc][:url] %> <small><%= hit.score %></small></p>
+    <div class="btn-group cluster-btns">
+    <% @clusters.each do |k,v| %>
+        <% @cluster_class = "btn" %>
+        <% @cluster_class += " btn-success" if !@cluster.nil? && @cluster == k %>
+        <%= link_to v[1], params.merge(:cluster => k), :class => @cluster_class %>
     <% end %>
+    </div>
+    <hr>
+    <% @results.hits.each do |hit| %>
+        <p><%= link_to @index[hit.doc][:title], @index[hit.doc][:url] %><small class="muted"> - <%= hit.score %> - <%= link_to "more like this", params.merge(:cluster => @doc_cluster_index[hit.doc]) %></small></p>
+    <% end %>
+    <hr>
     <% @total_pages = (@results.total_hits / 10.0).ceil %>
     <% @end_page = (@total_pages > @page + 5) ? @page + 5 : @total_pages %>
     <div class="pagination pagination-large pagination-centered">

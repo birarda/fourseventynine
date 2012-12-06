@@ -18,3 +18,9 @@ index/
 new_index/
 
 .DS_Store
+
+clusters/
+cluster_indices
+doc_cluster_index
+test.txt
+vectors.txt
