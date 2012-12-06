@@ -53,7 +53,7 @@ class IndexerController < ApplicationController
     indexed = {}
 
     # crawl this page  
-    Anemone.crawl('http://www.concordia.ca') do | anemone |
+    Anemone.crawl('http://www.concordia.ca', :depth_limit => 1) do | anemone |
       # only process pages in the article directory 
       anemone.on_every_page do |page|
         next if page.doc.nil?
@@ -63,9 +63,12 @@ class IndexerController < ApplicationController
         
         # skip if duplicate entry
         next if indexed[page.url]
-        indexed[page.url] = 1  
+        indexed[page.url] = 1
+
+        # remove script tags
+        page.doc.at('body').xpath('//script').remove
         
-        index << {  
+        index << {
           :url => page.url,  
           :title => page.doc.at('title').text, 
           :content => page.doc.at('body').text 
@@ -76,45 +79,46 @@ class IndexerController < ApplicationController
       end  
     end
     
-    # dictionary = {}
+    dictionary = {}
     
-    # index.reader.terms(:content).each do |term, doc_freq|
-    #   dictionary[term] = 0
-    # end
+    index.reader.terms(:content).each do |term, doc_freq|
+      dictionary[term] = 0
+    end
 
-    # doc_vectors = {}
+    doc_vectors = {}
 
-    # # counter = 50
+    # counter = 50
 
-    # index.reader.each_tfidf_vec(:content) do |doc_id, tfidf_vec|
-    #   vector = dictionary
+    index.reader.each_tfidf_vec(:content) do |doc_id, tfidf_vec|
+      File.open('test.txt', 'a') {|f| f.write "#{doc_id}\n => \n #{tfidf_vec.sort {|x, y| x[1] <=> y[1]}.inspect}\n" }
 
-    #   tfidf_vec.each do |term, score|
-    #     vector[term] = score
-    #   end
+      vector = dictionary
 
-    #   doc_vectors[doc_id] = vector.sort
-    #   puts "#{doc_vectors[doc_id].inspect}"
-    #   # break if counter < 1
-    #   # counter = counter - 1
-    # end
+      tfidf_vec.each do |term, score|
+        vector[term] = score
+      end
 
-    # vectors_array = []
-    # doc_vectors.each do |key, val|
-    #   vectors_array[key] = val.collect {|x| x[1]}
-    # end
+      doc_vectors[doc_id] = vector.sort
+      # break if counter < 1
+      # counter = counter - 1
+    end
 
-    # kmeans = KMeans.new(vectors_array, :centroids => 10)
+    vectors_array = []
+    doc_vectors.each do |key, val|
+      vectors_array[key] = val.collect {|x| x[1]}
+    end
 
-    # puts kmeans.inspect
+    kmeans = KMeans.new(vectors_array, :centroids => 10)
 
-    # doc_vectors.each do |key, val|
-    #   File.open('vectors.txt', 'a') {|f| f.write "#{key}\n => \n #{val.inspect}\n" }
-    # end
+    puts kmeans.inspect
 
-    # puts "TEST"
-    # puts vectors_array[0].inspect
-    # puts "TEST"
+    doc_vectors.each do |key, val|
+      File.open('vectors.txt', 'a') {|f| f.write "#{key}\n => \n #{val.inspect}\n" }
+    end
+
+    puts "TEST"
+    puts vectors_array[0].inspect
+    puts "TEST"
 
     @index = index
 
