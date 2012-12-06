@@ -38,8 +38,12 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug'
+<<<<<<< HEAD
 gem 'anemone'
 # gem 'ruby-readability', :require => 'readability'
+=======
+gem 'anemone', :git => 'git://github.com/efrat-safanov/anemone.git', :branch => 'next'
+>>>>>>> debc78a8fbfa8d91557b138e6c54463586a20e5c
 gem 'ferret'
 gem 'k_means'
 

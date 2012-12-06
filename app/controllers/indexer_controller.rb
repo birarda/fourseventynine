@@ -51,29 +51,31 @@ class IndexerController < ApplicationController
     indexed = {}
 
     # crawl this page  
-    Anemone.crawl('http://www.concordia.ca', :depth_limit => 1) do | anemone |
+    Anemone.crawl('http://www.concordia.ca') do | anemone |
       # only process pages in the article directory 
+
       anemone.on_every_page do |page|
         next if page.doc.nil?
         next if page.doc.at('title').nil?
-        # store the page in the index
         
-        # skip if duplicate entry
-        next if indexed[page.url]
-        indexed[page.url] = 1
-
-        # remove script tags
         page.doc.at('body').xpath('//script').remove
-    
+        body = page.doc.at('body').text
+
+        body_md5 = Digest::MD5.hexdigest(body)
+
+        # skip if duplicate entry
+        next if indexed[body_md5]
+        indexed[body_md5] = 1
+
         index << {  
           :url => page.url,  
-          :title => page.doc.at('title').text, 
-          :content => page.doc.at('body').text 
-          # :readable => readable
+          :title => page.doc.at('title'), 
+          :content => body
         }
+        
         pages_indexed += 1
         puts "#{page.url} indexed. Total: #{pages_indexed}"
-      end  
+      end
     end
     
     dictionary = {}
