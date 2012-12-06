@@ -46,7 +46,6 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     ferret (0.11.8.5)
-    guess_html_encoding (0.0.6)
     hike (1.2.1)
     i18n (0.6.1)
     journey (1.0.4)
@@ -97,9 +96,6 @@ GEM
       json (~> 1.4)
     ref (1.0.2)
     robotex (1.0.0)
-    ruby-readability (0.5.5)
-      guess_html_encoding (>= 0.0.4)
-      nokogiri (>= 1.4.2)
     sass (3.2.3)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -141,7 +137,6 @@ DEPENDENCIES
   libv8 (~> 3.11.8)
   rails (= 3.2.9)
   rake
-  ruby-readability
   sass-rails (~> 3.2.3)
   sqlite3
   therubyracer (~> 0.11.0beta5)

@@ -39,7 +39,7 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug'
 gem 'anemone'
-gem 'ruby-readability', :require => 'readability'
+# gem 'ruby-readability', :require => 'readability'
 gem 'ferret'
 gem 'k_means'
 

@@ -1,5 +1,3 @@
-require 'readability'
-
 class Ferret::Index::IndexReader
 
   TFIDF_THRESH = 0.0
@@ -53,11 +51,10 @@ class IndexerController < ApplicationController
     indexed = {}
 
     # crawl this page  
-    Anemone.crawl('http://www.concordia.ca') do | anemone |
+    Anemone.crawl('http://www.concordia.ca', :depth_limit => 1) do | anemone |
       # only process pages in the article directory 
       anemone.on_every_page do |page|
         next if page.doc.nil?
-        readable = Readability::Document.new(page.body).content
         next if page.doc.at('title').nil?
         # store the page in the index
         
@@ -108,9 +105,44 @@ class IndexerController < ApplicationController
       vectors_array[key] = val.collect {|x| x[1]}
     end
 
-    kmeans = KMeans.new(vectors_array, :centroids => 10)
+    kmeans = KMeans.new(vectors_array, :centroids => 3)
+
+    # puts kmeans.inspect
+
+    cluster_indices = {}
 
     puts kmeans.inspect
+
+    count = 0
+
+    # create the clusters using k-means
+    kmeans.view.each do |cluster|
+      next if cluster.empty?
+      cluster_indices[count] = [Ferret::Index::Index.new(:path => "clusters/#{count}"), '']
+      puts "Creating index for cluster #{count}..."
+      p cluster
+      cluster.each do |doc_id|
+        puts "adding #{doc_id}"
+        cluster_indices[count][0] << {
+          :url => index[doc_id][:url],
+          :title => index[doc_id][:title],
+          :content => index[doc_id][:content]
+        }
+      end
+      count += 1
+    end
+
+    # find the most frequent term in each cluster
+    cluster_indices.each do|key, val|
+      terms = {}
+    
+      val[0].reader.terms(:content).each do |term, doc_freq|
+        terms[term] = doc_freq
+      end
+
+      val[1] = terms.max_by {|k,v| v}
+      puts "the most frequent term is #{val[1]}"
+    end
 
     # doc_vectors.each do |key, val|
     #   File.open('vectors.txt', 'a') {|f| f.write "#{key}\n => \n #{val.inspect}\n" }
