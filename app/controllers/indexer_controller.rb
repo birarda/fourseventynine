@@ -53,7 +53,7 @@ class IndexerController < ApplicationController
     indexed = {}
 
     # crawl this page  
-    Anemone.crawl('http://www.concordia.ca', :depth_limit => 1) do | anemone |
+    Anemone.crawl('http://www.concordia.ca') do | anemone |
       # only process pages in the article directory 
       anemone.on_every_page do |page|
         next if page.doc.nil?
@@ -67,8 +67,8 @@ class IndexerController < ApplicationController
 
         # remove script tags
         page.doc.at('body').xpath('//script').remove
-        
-        index << {
+    
+        index << {  
           :url => page.url,  
           :title => page.doc.at('title').text, 
           :content => page.doc.at('body').text 
@@ -112,13 +112,11 @@ class IndexerController < ApplicationController
 
     puts kmeans.inspect
 
-    doc_vectors.each do |key, val|
-      File.open('vectors.txt', 'a') {|f| f.write "#{key}\n => \n #{val.inspect}\n" }
-    end
+    # doc_vectors.each do |key, val|
+    #   File.open('vectors.txt', 'a') {|f| f.write "#{key}\n => \n #{val.inspect}\n" }
+    # end
 
-    puts "TEST"
-    puts vectors_array[0].inspect
-    puts "TEST"
+    # puts vectors_array[0].inspect
 
     @index = index
 
