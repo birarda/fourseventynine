@@ -141,10 +141,11 @@ class IndexerController < ApplicationController
       val[0].reader.terms(:content).each do |term, doc_freq|
         terms[term] = doc_freq
       end
-
       val[1] = terms.max_by {|k,v| v}.first
-      puts "the most frequent term is #{val[1]}"
     end
+
+    # serialize the cluster indices and save to file
+    File.open('cluster_indices', 'w') {|f| f.write YAML::dump(cluster_indices)}
 
     # doc_vectors.each do |key, val|
     #   File.open('vectors.txt', 'a') {|f| f.write "#{key}\n => \n #{val.inspect}\n" }
@@ -152,6 +153,17 @@ class IndexerController < ApplicationController
 
     # puts vectors_array[0].inspect
 
+    # construct document to cluster index
+    doc_cluster_index = {}
+    kmeans.view.each_with_index do |cluster, index|
+      next if cluster.empty?
+      cluster.each do |doc_id|
+        doc_cluster_index[doc_id] = index
+      end
+    end
+
+    # serialize the document to cluster index and save to file
+    File.open('doc_cluster_index', 'w') {|f| f.write YAML::dump(doc_cluster_index)}
     @index = index
 
     render :index
