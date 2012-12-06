@@ -4,6 +4,17 @@
     <p>No results found for that query. Maybe we need to go deeper?</p>
 <% else %>
     <% @results.hits.each do |hit| %>
-        <p><%= link_to @index[hit.doc][:title], @index[hit.doc][:url] %></p>
+        <p><%= link_to @index[hit.doc][:title], @index[hit.doc][:url] %> <small><%= hit.score %></small></p>
     <% end %>
+    <% @total_pages = (@results.total_hits / 10.0).ceil %>
+    <% @end_page = (@total_pages > @page + 5) ? @page + 5 : @total_pages %>
+    <div class="pagination pagination-large pagination-centered">
+        <ul>
+            <li <%= 'class=disabled' if @page == 1 %>><%= link_to "Prev", params.merge(:page => @page-1) %></li>  
+    <% (@page..@end_page).each do |n| %>
+            <li><%= link_to n, params.merge(:page => n ) %></li> 
+    <% end %>
+            <li <%= 'class=disabled' if @page == @total_pages %>><%= link_to "Next", params.merge(:page => @page+1) %></li> 
+        </ul>
+    </div>
 <% end %>

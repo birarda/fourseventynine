@@ -69,7 +69,7 @@ class IndexerController < ApplicationController
 
         index << {  
           :url => page.url,  
-          :title => page.doc.at('title'), 
+          :title => page.doc.at('title').text, 
           :content => body
         }
         
