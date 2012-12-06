@@ -1,0 +1,69 @@
+---
+0:
+- !ruby/object:Ferret::Index::Index
+  mon_owner: 
+  mon_count: 0
+  mon_mutex: !ruby/object:Mutex {}
+  key: 
+  close_dir: true
+  dir: &70366701272300 !ruby/object:Ferret::Store::FSDirectory
+    id_ref_cnt: 0
+    mon_owner: 
+    mon_count: 0
+    mon_mutex: !ruby/object:Mutex {}
+  options:
+    :path: clusters/0
+    :dir: *70366701272300
+    :lock_retry_time: 2
+    :analyzer: !ruby/object:Ferret::Analysis::StandardAnalyzer {}
+    :use_typed_range_query: true
+    :default_field: :*
+  searcher: 
+  writer: 
+  reader: !ruby/object:Ferret::Index::IndexReader
+    field_num_map:
+      :url: 0
+      :title: 1
+      :content: 2
+  auto_flush: false
+  id_field: :id
+  default_field: :*
+  default_input_field: :id
+  open: true
+  qp: 
+- !binary |-
+  MQ==
+1:
+- !ruby/object:Ferret::Index::Index
+  mon_owner: 
+  mon_count: 0
+  mon_mutex: !ruby/object:Mutex {}
+  key: 
+  close_dir: true
+  dir: &70366701268240 !ruby/object:Ferret::Store::FSDirectory
+    id_ref_cnt: 0
+    mon_owner: 
+    mon_count: 0
+    mon_mutex: !ruby/object:Mutex {}
+  options:
+    :path: clusters/1
+    :dir: *70366701268240
+    :lock_retry_time: 2
+    :analyzer: !ruby/object:Ferret::Analysis::StandardAnalyzer {}
+    :use_typed_range_query: true
+    :default_field: :*
+  searcher: 
+  writer: 
+  reader: !ruby/object:Ferret::Index::IndexReader
+    field_num_map:
+      :url: 0
+      :title: 1
+      :content: 2
+  auto_flush: false
+  id_field: :id
+  default_field: :*
+  default_input_field: :id
+  open: true
+  qp: 
+- !binary |-
+  Y29uY29yZGlh
