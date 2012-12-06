@@ -51,7 +51,7 @@ class IndexerController < ApplicationController
     indexed = {}
 
     # crawl this page  
-    Anemone.crawl('http://www.concordia.ca') do | anemone |
+    Anemone.crawl('http://www.concordia.ca', :depth_limit => 1) do | anemone |
       # only process pages in the article directory 
 
       anemone.on_every_page do |page|
@@ -142,7 +142,7 @@ class IndexerController < ApplicationController
         terms[term] = doc_freq
       end
 
-      val[1] = terms.max_by {|k,v| v}
+      val[1] = terms.max_by {|k,v| v}.first
       puts "the most frequent term is #{val[1]}"
     end
 
