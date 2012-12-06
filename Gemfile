@@ -38,7 +38,7 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug'
-gem 'spidr'
+gem 'anemone', :git => 'git://github.com/wordtracker/anemone.git'
 gem 'ruby-readability', :require => 'readability'
 gem 'ferret'
 gem 'k_means'

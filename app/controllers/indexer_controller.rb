@@ -50,21 +50,21 @@ class IndexerController < ApplicationController
     pages_indexed = 0
     indexed = {}
 
-    Spidr.site('http://www.concordia.ca') do |spider|
-      spider.every_html_page do |page|
+    Anemone.crawl('http://www.concordia.ca') do | anemone |
+      anemone.on_every_page do |page|
+        next if page.doc.nil?
+        next if page.doc.at('title').nil?
 
         # skip if duplicate entry
         next if indexed[page.url]
         indexed[page.url] = 1
 
-        next if page.at('body').nil?
-
-        page.at('body').search('//script').remove
-        body = page.at('body').text
+        page.doc.at('body').xpath('//script').remove
+        body = page.doc.at('body').text
 
         index << {  
           :url => page.url,  
-          :title => page.title, 
+          :title => page.doc.at('title'), 
           :content => body
         }
         
